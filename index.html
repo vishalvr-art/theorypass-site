@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TheoryPass — Pass your Spanish DGT theory test</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --brand: #7F77DD;
+      --brand-light: #EEEDFE;
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --text-primary: #1A1A1E;
+      --text-secondary: #555555;
+      --text-tertiary: #888888;
+      --border: #E8E8EC;
+      --correct: #1D9E75;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--brand); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a1730 0%, #0D0D0F 100%);
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(127,119,221,0.15);
+      border: 1px solid rgba(127,119,221,0.3);
+      color: #9990E8;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.5);
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-stat-num {
+      font-size: 28px;
+      font-weight: 500;
+      color: #fff;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 2px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+    }
+
+    /* ── LEGAL CONTENT ── */
+    .legal-section {
+      margin-bottom: 32px;
+    }
+    .legal-section h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .legal-section p, .legal-section li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    .legal-section ul {
+      padding-left: 20px;
+    }
+    .legal-section a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+    .legal-date {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: 32px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+    footer a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    /* ── TAB NAV ── */
+    .tab-nav {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .tab-btn {
+      padding: 16px 0;
+      margin-right: 32px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .tab-btn.active {
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">🎯 TheoryPass</a>
+    <div class="nav-links">
+      <a href="#privacy">Privacy Policy</a>
+      <a href="#terms">Terms of Service</a>
+      <a href="mailto:support@theorypass.app">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Spanish DGT Theory Exam</div>
+    <h1>Pass your DGT theory test.<br>Built for expats.</h1>
+    <p>1,000+ real DGT questions, fully in English. Track your pass probability and study smarter.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">1,000+</div>
+        <div class="hero-stat-label">Real DGT questions</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">17</div>
+        <div class="hero-stat-label">Exam topics</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">EN</div>
+        <div class="hero-stat-label">Fully in English</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB NAV -->
+  <div class="tab-nav">
+    <a href="#privacy" class="tab-btn active">Privacy Policy</a>
+    <a href="#terms" class="tab-btn">Terms of Service</a>
+  </div>
+
+  <!-- PRIVACY POLICY -->
+  <div class="section" id="privacy">
+    <div class="section-label">Legal</div>
+    <h2>Privacy Policy</h2>
+    <p class="legal-date">Last updated: June 2026</p>
+
+    <div class="legal-section">
+      <h3>Who we are</h3>
+      <p>TheoryPass is operated by Sixth Element. We help English-speaking expats in Spain prepare for the DGT theory driving exam. If you have any questions about this policy, contact us at <a href="mailto:support@theorypass.app">support@theorypass.app</a>.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>What data we collect</h3>
+      <ul>
+        <li><strong>Account data:</strong> your email address and name, provided when you create an account.</li>
+        <li><strong>Usage data:</strong> your answers to practice questions, accuracy per topic, streak, exam date, and pass probability score.</li>
+        <li><strong>Purchase data:</strong> if you subscribe to TheoryPass Pro, payment is processed by Apple. We do not store your payment details.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>How we use your data</h3>
+      <ul>
+        <li>To provide the app and personalise your study experience.</li>
+        <li>To calculate your pass probability and track your progress.</li>
+        <li>To send you account-related communications (e.g. password reset).</li>
+        <li>We do not sell your data. We do not use your data for advertising.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>Data storage</h3>
+      <p>Your data is stored securely using Supabase, hosted in the EU. We retain your data for as long as your account is active. You can request deletion at any time by emailing <a href="mailto:support@theorypass.app">support@theorypass.app</a>.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Third-party services</h3>
+      <ul>
+        <li><strong>Supabase</strong> — database and authentication</li>
+        <li><strong>RevenueCat</strong> — subscription management</li>
+        <li><strong>Apple App Store</strong> — payment processing</li>
+        <li><strong>Anthropic</strong> — AI-powered explanations (no personal data is sent)</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>Your rights</h3>
+      <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, email us at <a href="mailto:support@theorypass.app">support@theorypass.app</a>. We will respond within 30 days.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Children</h3>
+      <p>TheoryPass is not directed at children under 13. We do not knowingly collect data from children under 13.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Changes to this policy</h3>
+      <p>We may update this policy from time to time. We will notify you of significant changes via the app or by email.</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- TERMS OF SERVICE -->
+  <div class="section" id="terms">
+    <div class="section-label">Legal</div>
+    <h2>Terms of Service</h2>
+    <p class="legal-date">Last updated: June 2026</p>
+
+    <div class="legal-section">
+      <h3>Acceptance of terms</h3>
+      <p>By using TheoryPass, you agree to these terms. If you do not agree, please do not use the app. TheoryPass is operated by Sixth Element.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>What TheoryPass provides</h3>
+      <p>TheoryPass is an exam preparation app with 1,000+ real DGT questions for the Spanish theory driving test. It is designed to help you study, but we cannot guarantee you will pass your exam. Results depend on your effort and preparation.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Your account</h3>
+      <ul>
+        <li>You must provide accurate information when creating your account.</li>
+        <li>You are responsible for keeping your password secure.</li>
+        <li>You must be 18 or older to use TheoryPass.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>Subscriptions and payments</h3>
+      <ul>
+        <li>TheoryPass Pro is available as a monthly (€4.99/month) or annual (€24.99/year) subscription.</li>
+        <li>Payment is charged to your Apple ID at confirmation of purchase.</li>
+        <li>Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current period.</li>
+        <li>You can manage or cancel your subscription in your Apple ID account settings.</li>
+        <li>We do not offer refunds except where required by law.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>Free tier limits</h3>
+      <p>Free users may take up to 3 tests per day and use the AI instructor up to 5 times. These limits may change. Premium subscribers have unlimited access.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Acceptable use</h3>
+      <ul>
+        <li>Do not attempt to reverse engineer, copy, or redistribute the app or its content.</li>
+        <li>Do not use the app for any unlawful purpose.</li>
+        <li>Do not attempt to circumvent the free tier limits.</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <h3>Intellectual property</h3>
+      <p>All content in TheoryPass — including questions, explanations, study cards, and design — is owned by Sixth Element or licensed for use in the app. You may not copy or redistribute this content.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Disclaimer</h3>
+      <p>TheoryPass is provided "as is". We make no warranties about the accuracy of questions or the likelihood of passing your exam. We are not affiliated with the DGT or the Spanish government.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Limitation of liability</h3>
+      <p>To the maximum extent permitted by law, Sixth Element shall not be liable for any indirect, incidental, or consequential damages arising from your use of TheoryPass.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Governing law</h3>
+      <p>These terms are governed by the laws of Spain. Any disputes will be resolved in the courts of Spain.</p>
+    </div>
+
+    <div class="legal-section">
+      <h3>Contact</h3>
+      <p>Questions about these terms? Email us at <a href="mailto:support@theorypass.app">support@theorypass.app</a>.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Sixth Element. All rights reserved.</p>
+    <p><a href="#privacy">Privacy Policy</a> · <a href="#terms">Terms of Service</a> · <a href="mailto:support@theorypass.app">support@theorypass.app</a></p>
+  </footer>
+
+</body>
+</html>
